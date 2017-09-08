@@ -2,10 +2,8 @@
 twitter.py is a small python script for searching twitter on a linux shell. twitter uses the TwitterSearch module.
 
 # requirements
-```
 - TwitterSearch (sudo -H pip install TwitterSearch)
 - [Twitter developer api access](https://dev.twitter.com/)
-```
 
 
 # installation
