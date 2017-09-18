@@ -9,9 +9,10 @@
 
     author : harald van der laan
     date   : 2017/09/08
-    version: v1.0.2
+    version: v1.0.3
 
     changelog:
+        - v1.0.3: added proxy support
         - v1.0.2: added while loop with sleep of 60 seconds
         - v1.0.1: added support of multiple tag search values
         - v1.0.0: initial version
@@ -41,16 +42,21 @@ def get_args():
     parser.add_argument('-d', '--daemon', action='store_true', help='automatic refresh every 60 seconds')
     parser.add_argument('-l', '--lang', default='en', choices=['en', 'nl'],
                         help='language of the tweet')
+    parser.add_argument('-p', '--proxy', help='proxy server to connect to')
     parser.add_argument('-t', '--tag', nargs='+', default=[],
                         help='display tweets with hashtag')
     parser.add_argument('-u', '--user', help='display tweets from user')
 
     return parser.parse_args()
 
-def twitter_user_search(ck, cs, at, ats, user, count):
+def twitter_user_search(ck, cs, at, ats, user, count, proxy=None):
     """ function for twitter search on a twitter user """
     tuo = TwitterUserOrder(user)
-    ts = TwitterSearch(ck, cs, at, ats)
+    if proxy:
+        ts = TwitterSearch(ck, cs, at, ats, proxy=proxy)
+    else:
+        ts = TwitterSearch(ck, cs, at, ats)
+
     tweetcount = 0
 
     for tweet in ts.search_tweets_iterable(tuo):
@@ -61,14 +67,19 @@ def twitter_user_search(ck, cs, at, ats, user, count):
         else:
             break
 
-def twitter_tag_search(ck, cs, at, ats, tag, count, lang):
+def twitter_tag_search(ck, cs, at, ats, tag, count, lang, proxy=None):
     """ function for twitter search on hashtags and keywords """
     tso = TwitterSearchOrder()
     tso.set_keywords(tag)
     if lang == 'en' or lang == 'nl':
         tso.set_language(lang)
+
     tso.set_result_type('recent')
-    ts = TwitterSearch(ck, cs, at, ats)
+    if proxy:
+        ts = TwitterSearch(ck, cs, at, ats, proxy=proxy)
+    else:
+        ts = TwitterSearch(ck, cs, at, ats)
+
     tweetcount = 0
 
     for tweet in ts.search_tweets_iterable(tso):
@@ -92,10 +103,10 @@ def main(args, conf):
 
     if args.user:
         twitter_user_search(consumer_key, consumer_secret, access_token, access_token_secret,
-                            args.user, args.amount)
+                            args.user, args.amount, args.proxy)
     if args.tag:
         twitter_tag_search(consumer_key, consumer_secret, access_token, access_token_secret,
-                           args.tag, args.amount, args.lang)
+                           args.tag, args.amount, args.lang, args.proxy)
 
 if __name__ == "__main__":
     ARGS = get_args()

@@ -24,6 +24,8 @@ optional arguments:
     -d, --daemon          automatic refresh every 60 seconds
     -l {en,nl}, --lang {en,nl}
                           language of the tweet
+    -p PROXY, --proxy PROXY
+                          proxy server to connect to
     -t TAG [TAG ...], --tag TAG [TAG ...]
                           display tweets with hashtag
     -u USER, --user USER  display tweets from user
