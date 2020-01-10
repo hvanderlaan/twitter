@@ -1,0 +1,6 @@
+# configuration file for twitter.py
+[twitter]
+consumerkey =
+consumersecret =
+accesstoken =
+accesstokensecret =
