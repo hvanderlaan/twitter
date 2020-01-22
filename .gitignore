@@ -1,2 +1,5 @@
+# ignore twitter config because there are api tokens in this file
 twitter.cfg
-./*.cfg
+
+# ignore python virtual env
+.venv/
