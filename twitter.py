@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """ twitter.py - commandline twitter scraper that will display tweets with
                  hashtags of tweets from users.
